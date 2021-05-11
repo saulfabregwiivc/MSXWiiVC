@@ -1,6 +1,9 @@
 MSX Wii Virtual Console iNJECTOR
 by saulfabreg
 
+v2.5 (2020/May/5)
+- Simplified still more the use of WadMii tool
+- Modified some things of temporal folder
 v2.4 (2020/May/3)
 - Changed some things for temporal file
 - Made simple the WadMii procedure by skipping steps
