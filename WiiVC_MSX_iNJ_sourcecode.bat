@@ -2,13 +2,13 @@
 cls
 @echo off
 
-title MSX Wii Virtual Console iNJECTOR ***BETA VERSiON*** by saulfabreg v2.6.0
+title MSX Wii Virtual Console iNJECTOR ***BETA VERSiON*** by saulfabreg v2.7.0
 
 echo MSX Wii Virtual Console (Wii VC) iNJECTOR ***BETA VERSiON***
 echo ---- compatible with: ----
 echo - Microsoft MSX (MSX1)
 echo - Microsoft MSX2
-echo --------------------------------------------------- v2.6.0 ---
+echo --------------------------------------------------- v2.7.0 ---
 echo By saulfabreg (special thanks to icefire, BFGR, G0dLiKe
 echo and Superken7)
 echo --------------------------------------------------------------
