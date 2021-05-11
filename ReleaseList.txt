@@ -1,10 +1,15 @@
 MSX Wii Virtual Console iNJECTOR
 by saulfabreg
 
+v2.6.0 (2021/January/13)
+- Fixed some bugs
+- Added new function for change title ID of the outputed WAD
+- The tool no longer requires WadMii; now uses BFGR's WAD packer/WAD unpacker for auto un/packing ;D
 v2.5 (2020/May/5)
 - Simplified still more the use of WadMii tool
 - Modified some things of temporal folder
 v2.4 (2020/May/3)
+- Changed to PUBLIC BETA VERSION
 - Changed some things for temporal file
 - Made simple the WadMii procedure by skipping steps
 v2.3 (2020/May/2)
@@ -44,4 +49,5 @@ v1.2 (2020/April/20)
 v1.1 (2020/April/19)
 - Added plugins to tools used for make this injector.
 v1.0 (2020/April/18)
+- PRIVATE BETA VERSION ONLY FOR TESTING BY saulfabreg
 - Initial release

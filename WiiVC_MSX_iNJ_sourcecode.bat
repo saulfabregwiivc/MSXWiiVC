@@ -2,16 +2,21 @@
 cls
 @echo off
 
-title MSX Wii Virtual Console iNJECTOR ***BETA TEST VERSiON*** by saulfabreg v2.5
+title MSX Wii Virtual Console iNJECTOR ***BETA VERSiON*** by saulfabreg v2.6.0
 
-echo MSX Wii Virtual Console (Wii VC) iNJECTOR ***BETA VERSION***
-echo ----------------------------------------------------- v2.5 ---
-echo By saulfabreg (special thanks to icefire, Leathl and Superken7)
+echo MSX Wii Virtual Console (Wii VC) iNJECTOR ***BETA VERSiON***
+echo ---- compatible with: ----
+echo - Microsoft MSX (MSX1)
+echo - Microsoft MSX2
+echo --------------------------------------------------- v2.6.0 ---
+echo By saulfabreg (special thanks to icefire, BFGR, G0dLiKe
+echo and Superken7)
 echo --------------------------------------------------------------
 echo u8it.exe tool (from WADder) (c) 2009 icefire
-echo Wii.cs-Tools WadMii (c) 2010 Leathl
+echo MSX/MSX2 VC iNJECT info (c) 2011-2013 G0dLiKe
+echo WAD (un)packer (c) 2009 BFGR
 echo FreeTheWads.exe tool (c) 2009 Superken7
-echo everything else (c) 2020 saulfabreg
+echo everything else (c) 2020-2021 saulfabreg
 echo Made with love by saulfabreg (saulfabregamboa@outlook.com)
 echo http://saulfabreg-wiivc.blogspot.com
 echo ---------------------------------------------------------------
@@ -22,10 +27,10 @@ echo Welcome to the MSX Wii VC iNJECTOR!!
 echo.
 echo Let's start :D
 echo.
-echo First copy your MSX1/MSX2 ROM file into the folder
+echo First copy your MSX1/MSX2 ROM (.rom/.mx1/.mx2) file into the folder
 echo 'ROM_INPUT'
 echo.
-echo Then copy an MSX1 / MSX2 WAD into the folder 'WAD_INPUT'
+echo Then copy an MSX1/MSX2 WAD into the folder 'WAD_INPUT'
 echo.
 echo Press Enter when you are ready
 pause>nul
@@ -44,27 +49,15 @@ cd WAD_INPUT
 copy *.wad ..\temp_01
 cd..
 cd temp_01
-echo // Unpack the WAD.
-echo // Make sure to use the "unpack.wad" WAD file from "temp_01"
-echo    folder!!
-echo.
-echo "WadMii.exe" will be opened for extract the WAD.
-echo 1. When the WadMii tool opens, choose the mode to "Unpack"
-echo 2. Click in the ".." button of the "File" box
-echo 3. Choose the "unpack.wad" file from "temp_01" folder
-echo 4. Click in the Unpack button
-echo 5. Once a message appears, close the message.
-echo.
-echo // When you finished close WadMii.exe and press Enter
 rename *.wad unpack.wad
-start WadMii.exe
-pause>nul
+echo // Unpacking the WAD... Please wait!
+wadunpacker.exe unpack.wad
 echo // Copying 5.app file to temp folder...
-cd unpack
+cd 00010001*
+set WADfolder=%cd%
 copy 00000005.app ..\
 cd..
 u8it 00000005.app 00000005_app_OUT
-rename unpack packWAD
 goto :pickROMinput
 
 :pickROMinput
@@ -72,6 +65,8 @@ cls
 echo // Checking ROM file into 'ROM_INPUT'...
 cd..
 cd ROM_INPUT
+rename *.mx1 *.rom
+rename *.mx2 *.rom
 copy *.rom ..\temp_01
 cd..
 cd temp_01
@@ -100,24 +95,27 @@ echo Maybe this is not a MSX1/MSX2 WAD.
 echo ---------------------------------------
 echo Failed =(
 echo ---------------------------------------
+cd..
+cd..
+rd /s /q temp_01
 pause
 exit
 
 :msx2
 cls
-echo MSX2 ROM found into 5.app file (MEGAROM.ROM), do you want to
-echo inject your ROM into here? (Y = Yes, N = No)
-CHOICE /C:yn /N /M "Your input:"
-if "%ERRORLEVEL%"=="1" goto :iNJECT_MSX2
-if "%ERRORLEVEL%"=="2" goto :notinjected
+echo // MSX2 ROM found into 5.app file (MEGAROM.ROM), do you want to
+echo    inject your ROM into here? (Y = Yes, N = No)
+choice /C:yn /N /M "Your input:"
+if "%errorlevel%"=="1" goto :iNJECT_MSX2
+if "%errorlevel%"=="2" goto :notinjected
 
 :msx1
 cls
-echo MSX1 ROM found into 5.app file (SLOT1.ROM), do you want to
-echo inject your ROM into here? (Y = Yes, N = No)
-CHOICE /C:yn /N /M "Your input (Up next: Location):"
-if "%ERRORLEVEL%"=="1" goto :iNJECT_MSX1
-if "%ERRORLEVEL%"=="2" goto :notinjected
+echo //  MSX1 ROM found into 5.app file (SLOT1.ROM), do you want to
+echo     inject your ROM into here? (Y = Yes, N = No)
+choice /C:yn /N /M "Your input (Up next: Location):"
+if "%errorlevel%"=="1" goto :iNJECT_MSX1
+if "%errorlevel%"=="2" goto :notinjected
 
 :iNJECT_MSX1
 cls
@@ -127,7 +125,7 @@ copy SLOT1.ROM 00000005_app_OUT
 echo ROM file injected successfully! =)
 echo Press Enter to pack the new 5.app file
 pause>nul
-GOTO :pack5app
+GOTO :packmove5app
 
 :iNJECT_MSX2
 cls
@@ -137,7 +135,7 @@ copy MEGAROM.ROM 00000005_app_OUT
 echo ROM file injected successfully! =)
 echo Press Enter to pack the new 5.app file
 pause>nul
-GOTO :pack5app
+GOTO :packmove5app
 
 :notinjected
 cls
@@ -145,48 +143,69 @@ echo Cannot be injected. You canceled the injection.
 echo ------------------------------------------------
 echo NOTE: Please delete the folder 'temp_01' before
 echo using again the tool.
-echo ------------------------------------------------
+echo ---------------------------------------
 echo Failed =(
-echo ------------------------------------------------
+echo ---------------------------------------
+cd..
+cd..
+rd /s /q temp_01
 pause
 exit
 
-:pack5app
+:packmove5app
 cls
 echo // Packing the new 5.app file...
 u8it 00000005_app_OUT 00000005.app -pack
-goto :move5app
-
-:move5app
-cls
 cd..
 mkdir WAD_OUTPUT
 cd temp_01
 echo Replacing 5.app file with your ROM...
 echo If a warning message appears, write "yes"
 echo and press Enter to continue.
-move 00000005.app packWAD
-GOTO :packwad
+move /y 00000005.app "%WADfolder%"
+GOTO :wadidquestion
 
-:packwad
+:wadidquestion
 cls
-echo // Now pack the WAD.
-echo // Make sure to use the "packWAD" folder from "temp_01"
-echo    folder!!
+echo // Do you wish to modify the game ID for your new WAD?
 echo.
-echo "WadMii.exe" will be opened for extract the WAD.
-echo 1. When the WadMii tool opens, choose the mode to "Pack"
-echo 2. Click in the ".." button of the "Folder" box
-echo 3. Choose the "packWAD" folder from "temp_01" folder
-echo 4. If you wish, check the "Change Title ID" box and then
-echo    change the ID of the new WAD in the ID box.
-echo 5. Click in the Pack button
-echo 6. Once a message appears, close the message.
+echo    (Y = Yes, N = No)
+CHOICE /C:yn /N /M "Your input (Up next: Location):"
+if "%ERRORLEVEL%"=="1" goto :packwadid
+if "%ERRORLEVEL%"=="2" goto :packwadnoid
+
+:packwadid
+echo // Write a new ID for your new WAD, by following these conditions:
 echo.
-echo // When you finished close WadMii.exe and press Enter
-start WadMii.exe
-pause>nul
-rename packWAD.wad output.wad
+echo    1. The ID MUST have 4 characters (XXXX).
+echo    2. Your ID MUST have CAPITAL LETTERS (MAYUSCULAS) and numbers (0-9).
+echo       EXAMPLE: X4AJ
+echo.
+SET/P WADID=// Write the new ID here and then hit Enter:
+echo // Copying the modified WAD contents... Please wait!
+cd "%WADfolder%"
+copy *.app ..\
+copy *.cert ..\
+copy *.tik ..\
+copy *.tmd ..\
+copy *.trailer ..\
+cd..
+echo // Packing the new WAD... Please wait!
+wadpacker_bfgr.exe *.tik *.tmd *.cert output.wad -sign -i %WADID%
+GOTO :questionRF
+
+:packwadnoid
+cls
+echo // Copying the modified WAD contents... Please wait!
+cd "%WADfolder%"
+copy *.app ..\
+copy *.cert ..\
+copy *.tik ..\
+copy *.tmd ..\
+copy *.trailer ..\
+cd..
+echo // Packing the new WAD... Please wait!
+wadpacker_bfgr.exe *.tik *.tmd *.cert output.wad -sign
 GOTO :questionRF
 
 :questionRF
@@ -220,7 +239,7 @@ cls
 cd..
 echo Deleting temporal folder... Write "y" and
 echo press Enter if a message appears.
-rd temp_01 /s
+rd /s /q temp_01
 cls
 echo // CONGRATULATIONS!! New WAD created with your ROM
 echo    injected!!
