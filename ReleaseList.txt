@@ -1,6 +1,10 @@
 MSX Wii Virtual Console iNJECTOR
 by saulfabreg
 
+v2.7.0 (2021/May/11)
+- Some minor fixes
+- Set up for clean "hidden" temporal files when exiting the program
+- You WILL NEED to disable temporally your anti-virus program or add the tool folder to the whitelist before running the tool!!!
 v2.6.0 (2021/January/13)
 - Fixed some bugs
 - Added new function for change title ID of the outputed WAD
