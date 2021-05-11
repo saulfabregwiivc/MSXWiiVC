@@ -1,0 +1,44 @@
+MSX Wii Virtual Console iNJECTOR
+by saulfabreg
+
+v2.4 (2020/May/3)
+- Changed some things for temporal file
+- Made simple the WadMii procedure by skipping steps
+v2.3 (2020/May/2)
+- MSX VC iNJECTOR no longer requires gzinject tool, now uses "WadMii" tool from Wii.cs-Tools by Leathl
+- Open in selected screens of the wizard.
+- Wii.cs-Tools "WadMii" requires "Microsoft .NET Framework 2.0" in order to work.
+- Wii.cs-Tools also allows to change the ID of the new WAD when packing.
+v2.2 (2020/May/2)
+- Added FreeTheWads functionality for make the WAD Region Free.
+- Added question if you desire to make the WAD Region Free.
+v2.1 (2020/May/2)
+- Fixed bug of the WAD gets 50% bigger than original WAD.
+v2.0 (2020/May/1)
+- 5.app file no longer required, you are able to use MSX1/MSX2 Wii VC WADs.
+- Folder "5_app_INPUT" changed to "WAD_INPUT"
+- Folder "ROM_5_app_OUTPUT" changed to "WAD_OUTPUT"
+- Added function for delete automatically the temp folder when finished
+v1.9 (2020/April/30)
+- Changed ROM file input folder from name "ROM_file_INPUT" to "ROM_INPUT".
+v1.8 (2020/April/29)
+- MSX Wii VC iNJECTOR no longer needs WAD packer/unpacker by BFGR. Now uses the "gzinject" tool made by krimtonz.
+- Fixed major glitches in screen.
+v1.7 (2020/April/27)
+- Fixed detector of MSX1 / MSX2 entry from WAD.
+- Remember the MSX1 WADs have the rom as "SLOT1.ROM".
+- Also remember the MSX2 WADs have the rom as "MEGAROM.ROM".
+v1.6 (2020/April/25)
+- Fixed a bit the detector of ROM from 5.app.
+v1.5 (2020/April/23)
+- Fixed 5.app U8 extracting from temp folder.
+v1.4 (2020/April/21)
+- Added detector of MSX1/MSX2 rom entry from WAD.
+v1.3 (2020/April/20)
+- Added function of make temporal folder called "temp_01".
+v1.2 (2020/April/20)
+- Fixed some things of the injector.
+v1.1 (2020/April/19)
+- Added plugins to tools used for make this injector.
+v1.0 (2020/April/18)
+- Initial release
