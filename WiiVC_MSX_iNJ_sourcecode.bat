@@ -2,11 +2,11 @@
 cls
 @echo off
 
-title MSX Wii Virtual Console iNJECTOR ***BETA TEST VERSiON*** by saulfabreg v2.4
+title MSX Wii Virtual Console iNJECTOR ***BETA TEST VERSiON*** by saulfabreg v2.5
 
 echo MSX Wii Virtual Console (Wii VC) iNJECTOR ***BETA VERSION***
-echo ----------------------------------------------------- v2.4 ---
-echo By saulfabreg (special thanks to icefire, BFGR and Superken7)
+echo ----------------------------------------------------- v2.5 ---
+echo By saulfabreg (special thanks to icefire, Leathl and Superken7)
 echo --------------------------------------------------------------
 echo u8it.exe tool (from WADder) (c) 2009 icefire
 echo Wii.cs-Tools WadMii (c) 2010 Leathl
@@ -45,29 +45,26 @@ copy *.wad ..\temp_01
 cd..
 cd temp_01
 echo // Unpack the WAD.
-echo // Make sure to use the "WAD_temp.wad" WAD file from "temp_01"
+echo // Make sure to use the "unpack.wad" WAD file from "temp_01"
 echo    folder!!
 echo.
 echo "WadMii.exe" will be opened for extract the WAD.
 echo 1. When the WadMii tool opens, choose the mode to "Unpack"
 echo 2. Click in the ".." button of the "File" box
-echo 3. Choose the "WAD_temp.wad" file from "temp_01" folder
+echo 3. Choose the "unpack.wad" file from "temp_01" folder
 echo 4. Click in the Unpack button
 echo 5. Once a message appears, close the message.
 echo.
 echo // When you finished close WadMii.exe and press Enter
-rename *.wad WAD_temp.wad
+rename *.wad unpack.wad
 start WadMii.exe
 pause>nul
 echo // Copying 5.app file to temp folder...
-cd WAD_temp
+cd unpack
 copy 00000005.app ..\
-echo Deleting temporal folder of 5.app... Write "y" and
-echo press Enter if a message appears.
-rd content5 /s
 cd..
 u8it 00000005.app 00000005_app_OUT
-pause
+rename unpack packWAD
 goto :pickROMinput
 
 :pickROMinput
@@ -128,7 +125,8 @@ echo Injecting your ROM into the MSX1 5.app file...
 cd..
 copy SLOT1.ROM 00000005_app_OUT
 echo ROM file injected successfully! =)
-pause
+echo Press Enter to pack the new 5.app file
+pause>nul
 GOTO :pack5app
 
 :iNJECT_MSX2
@@ -137,7 +135,8 @@ echo Injecting your ROM into the MSX2 5.app file...
 cd..
 copy MEGAROM.ROM 00000005_app_OUT
 echo ROM file injected successfully! =)
-pause
+echo Press Enter to pack the new 5.app file
+pause>nul
 GOTO :pack5app
 
 :notinjected
@@ -156,8 +155,6 @@ exit
 cls
 echo // Packing the new 5.app file...
 u8it 00000005_app_OUT 00000005.app -pack
-echo CONGRATULATIONS!! New 5.app created with your ROM!
-pause
 goto :move5app
 
 :move5app
@@ -168,22 +165,19 @@ cd temp_01
 echo Replacing 5.app file with your ROM...
 echo If a warning message appears, write "yes"
 echo and press Enter to continue.
-move 00000005.app WAD_temp
+move 00000005.app packWAD
 GOTO :packwad
 
 :packwad
 cls
 echo // Now pack the WAD.
-echo // Make sure to use the "WAD_temp" folder from "temp_01"
+echo // Make sure to use the "packWAD" folder from "temp_01"
 echo    folder!!
 echo.
 echo "WadMii.exe" will be opened for extract the WAD.
 echo 1. When the WadMii tool opens, choose the mode to "Pack"
 echo 2. Click in the ".." button of the "Folder" box
-echo 3. Choose the "WAD_temp" folder from "temp_01" folder
-echo 4. Click in the ".." button of the "File" box
-echo 3. In "File name" box, write "output.wad" and choose the
-echo    "temp_01" folder as place to save the WAD
+echo 3. Choose the "packWAD" folder from "temp_01" folder
 echo 4. If you wish, check the "Change Title ID" box and then
 echo    change the ID of the new WAD in the ID box.
 echo 5. Click in the Pack button
@@ -192,6 +186,7 @@ echo.
 echo // When you finished close WadMii.exe and press Enter
 start WadMii.exe
 pause>nul
+rename packWAD.wad output.wad
 GOTO :questionRF
 
 :questionRF
